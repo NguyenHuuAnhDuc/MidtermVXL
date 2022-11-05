@@ -97,8 +97,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  setTimer(1000);
+  int counter = 0;
   while (1)
   {
+	  if(counter >= 10) counter = 0;
+	  display7SEG(counter++);
+	  setTimer(1000);
 	  fsm_for_input_processing () ;
 
 
