@@ -92,19 +92,20 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT (& htim2 );
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer(1000);
-  int counter = 0;
+  setTimer1(1000);
+  setTimer2(100);
   while (1)
   {
-	  if(counter >= 10) counter = 0;
-	  display7SEG(counter++);
-	  setTimer(1000);
-	  fsm_for_input_processing () ;
+	  if(timer2_flag == 1){
+		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		  setTimer2(100);
+	  }
+	  fsm_for_input_processing();
 
 
 
@@ -244,9 +245,7 @@ static void MX_GPIO_Init(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timerRun();
-	if( htim -> Instance == TIM2 ) {
-	button_reading() ;
-	}
+	button_reading();
 }
 
 
